@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Join the QuestionPro Research Community</title>
+  <meta name="description" content="Join a research community and receive invitations to surveys and interviews.">
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    :root{--blue:#0b6fdd;--teal:#0f9d8a;--ink:#10233f;--muted:#5f6b7a;--line:#dfe5ec;--bg:#f3f7fb;--card:#fff}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#eef6ff 0,#f8fbfd 48%,#fff 100%);color:var(--ink)}
+    .shell{min-height:100vh;display:grid;place-items:center;padding:24px}.card{width:min(720px,100%);background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 18px 60px rgba(21,47,76,.12);overflow:hidden}
+    .head{padding:28px 30px;background:linear-gradient(135deg,#0b6fdd,#0f9d8a);color:white}.brand{display:flex;align-items:center;gap:11px;font-weight:750;font-size:15px}.mark{width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.18);display:grid;place-items:center;font-size:20px}.head h1{font-size:34px;line-height:1.12;margin:28px 0 10px}.head p{margin:0;max-width:600px;color:#e7f4ff;line-height:1.55}
+    .body{padding:28px 30px}.pill{display:inline-flex;padding:6px 10px;border-radius:999px;background:#e9f4ff;color:#0b5ead;font-size:12px;font-weight:700;margin-right:6px;margin-bottom:8px}
+    .benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.benefit{border:1px solid var(--line);border-radius:12px;padding:14px}.benefit b{display:block;margin-bottom:5px}.benefit span{font-size:13px;color:var(--muted);line-height:1.45}
+    .notice{background:#f6f9fc;border:1px solid var(--line);border-radius:12px;padding:14px;font-size:13px;color:var(--muted);line-height:1.55}
+    label.consent{display:flex;gap:10px;align-items:flex-start;margin:18px 0;font-size:14px;line-height:1.45}.consent input{margin-top:3px;width:18px;height:18px}
+    .btn{width:100%;border:0;border-radius:11px;background:var(--blue);color:white;font-weight:750;padding:14px 18px;font-size:16px;cursor:pointer}.btn:disabled{opacity:.45;cursor:not-allowed}.btn:not(:disabled):hover{filter:brightness(.96)}
+    .fine{font-size:12px;color:var(--muted);text-align:center;margin:13px 0 0}.fine a{color:#0b6fdd}.error{display:none;background:#fff1f0;border:1px solid #f5c7c3;color:#a43b32;padding:13px;border-radius:10px;margin-bottom:15px}
+    @media(max-width:650px){.head,.body{padding:23px 20px}.head h1{font-size:28px}.benefits{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <main class="card" aria-labelledby="title">
+    <section class="head">
+      <div class="brand"><div class="mark">Q</div><span>QuestionPro Research Community</span></div>
+      <h1 id="title">Share your experience. Shape better decisions.</h1>
+      <p id="intro">Join a research community and receive invitations to surveys and interviews that match your background.</p>
+    </section>
+    <section class="body">
+      <div id="error" class="error" role="alert"></div>
+      <div><span class="pill" id="market">Research community</span><span class="pill" id="reward">Paid opportunities may be available</span></div>
+      <div class="benefits">
+        <div class="benefit"><b>Relevant invitations</b><span>We use your profile to match you with appropriate studies.</span></div>
+        <div class="benefit"><b>Voluntary participation</b><span>You decide which invitations you want to accept.</span></div>
+        <div class="benefit"><b>Transparent rewards</b><span>Any incentive and time commitment are disclosed before you participate.</span></div>
+      </div>
+      <div class="notice">Joining does not guarantee a specific number of invitations or earnings. Availability depends on research demand and whether you meet each study’s criteria.</div>
+      <label class="consent"><input id="consent" type="checkbox"><span>I agree to continue to QuestionPro’s registration and profiling experience and understand that participation is voluntary.</span></label>
+      <button id="continue" class="btn" disabled>Continue to join</button>
+      <p class="fine">Questions? Contact <a id="contact" href="mailto:research-panel@questionpro.com">research-panel@questionpro.com</a> · <a href="privacy.html">Privacy information</a></p>
+    </section>
+  </main>
+</div>
+<script>
+(() => {
+  const p = new URLSearchParams(location.search);
+  const q = (name, fallback='') => (p.get(name) || fallback).trim();
+  const audience = q('audience','the research community');
+  const market = q('market','Research community');
+  const reward = q('reward','Paid opportunities may be available');
+  const source = q('source','direct');
+  const campaign = q('campaign','general');
+  const audienceId = q('audience_id','general');
+  const referral = q('ref','');
+  const contact = q('contact','research-panel@questionpro.com');
+  const destRaw = q('dest','https://researchpanel.questionpro.com');
+
+  document.getElementById('market').textContent = market;
+  document.getElementById('reward').textContent = reward;
+  document.getElementById('intro').textContent = `Join ${audience} and receive invitations to surveys and interviews that match your background.`;
+  const contactLink = document.getElementById('contact');
+  contactLink.textContent = contact;
+  contactLink.href = `mailto:${contact}`;
+
+  const allowed = (raw) => {
+    try {
+      const u = new URL(raw);
+      const host = u.hostname.toLowerCase();
+      return u.protocol === 'https:' && (host === 'questionpro.com' || host.endsWith('.questionpro.com')) ? u : null;
+    } catch { return null; }
+  };
+  const destination = allowed(destRaw);
+  const error = document.getElementById('error');
+  if (!destination) {
+    error.style.display = 'block';
+    error.textContent = 'This recruitment campaign is not configured correctly. Please contact the research team.';
+  }
+
+  const consent = document.getElementById('consent');
+  const button = document.getElementById('continue');
+  consent.addEventListener('change', () => button.disabled = !consent.checked || !destination);
+  button.addEventListener('click', () => {
+    if (!destination || !consent.checked) return;
+    destination.searchParams.set('qp_source', source);
+    destination.searchParams.set('qp_campaign', campaign);
+    destination.searchParams.set('qp_audience', audienceId);
+    if (referral) destination.searchParams.set('qp_referral', referral);
+    destination.searchParams.set('utm_source', source);
+    destination.searchParams.set('utm_campaign', campaign);
+    destination.searchParams.set('utm_medium', 'panel_recruitment');
+    destination.searchParams.set('recruit_landing', location.href.split('#')[0]);
+    button.disabled = true;
+    button.textContent = 'Opening registration…';
+    location.assign(destination.toString());
+  });
+})();
+</script>
+</body>
+</html>
