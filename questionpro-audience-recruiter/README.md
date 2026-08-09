@@ -1,6 +1,6 @@
 # QuestionPro Audience Recruiter Pilot
 
-This folder contains a launchable, lightweight recruitment pilot.
+This folder contains a live, lightweight recruitment pilot. The current public deployment is https://questionpro-audience-recruiter.onrender.com/.
 
 ## Public recruitment page
 
@@ -15,7 +15,7 @@ This folder contains a launchable, lightweight recruitment pilot.
 Example:
 
 ```text
-https://p3technology.github.io/apps-script-samples/?audience=South%20Africa%20research%20community&market=South%20Africa&reward=Paid%20opportunities%20may%20be%20available&source=facebook_group_1&campaign=sa_general_2026_01&audience_id=sa_general&dest=https%3A%2F%2Fresearchpanel.questionpro.com
+https://questionpro-audience-recruiter.onrender.com/?audience=South%20Africa%20research%20community&market=South%20Africa&reward=Paid%20opportunities%20may%20be%20available&source=facebook_group_1&campaign=sa_general_2026_01&audience_id=sa_general&dest=https%3A%2F%2Fresearchpanel.questionpro.com
 ```
 
 ## Campaign builder
@@ -52,3 +52,7 @@ campaign_id,source_id,respondent_id,verified,completed,quality_score,fraud_flag,
 - No centralized click database.
 
 This pilot is operational for attributed recruiting because the QuestionPro destination receives campaign/source variables. The next production phase should add a shared database, operator authentication, redirect-event logging, suppression lists, and approved email/SMS integrations.
+
+## Ready source links
+
+`pilot-links.csv` contains source- and campaign-attributed links for the first South Africa recruitment channels. Use those exact links so downstream QuestionPro exports can be joined back to source performance.
